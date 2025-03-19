@@ -20,5 +20,16 @@
 	"is_state_currency": true,
 	"is_marketing_currency": false	
   }
+},
+{
+  "model": "crm.currency",
+  "pk": 3,
+  "fields": {
+    "name": "MXN",
+	"rate_to_state_currency": "1.0",
+	"rate_to_marketing_currency": "1.2",
+	"is_state_currency": true,
+	"is_marketing_currency": false	
+  }
 }
 ]
