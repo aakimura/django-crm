@@ -3,10 +3,13 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import validate_email
 
 from common.utils.helpers import get_today
 from common.utils.helpers import token_default
 from massmail.models import MassContact
+from validators.socials import validate_linkedin, validate_twitter, \
+                               validate_github
 
 
 class BaseContact(models.Model):
@@ -15,22 +18,18 @@ class BaseContact(models.Model):
 
     first_name = models.CharField(
         max_length=100, null=False, blank=False,
-        help_text=_("The name of the contact person (one word)."),
         verbose_name=_("First name"),
     )
     middle_name = models.CharField(
         max_length=100, blank=True, default='',
         verbose_name=_("Middle name"),
-        help_text=_("The middle name of the contact person.")
     )
     last_name = models.CharField(
         max_length=100, blank=True, default='',
-        help_text=_("The last name of the contact person (one word)."),
         verbose_name=_("Last name"),
     )
     title = models.CharField(
         max_length=100, null=True, blank=True,
-        help_text=_("The title (position) of the contact person."),
         verbose_name=_("Title / Position"),
     )
     SEX_CHOICES = (
@@ -126,7 +125,26 @@ class BaseCounterparty(models.Model):
         null=False,
         blank=False,
         verbose_name="Email",
+        validators=[validate_email],
         help_text=_("Use comma to separate Emails.")
+    )
+    linkedin = models.CharField(
+        max_length=100, blank=True, default='',
+        verbose_name=_("LinkedIn"),
+        validators=[validate_linkedin],
+        help_text=_("Example: https://mx.linkedin.com/in/juanperez")
+    )
+    twitter = models.CharField(
+        max_length=100, blank=True, default='',
+        verbose_name=_("Twitter (X)"),
+        validators=[validate_twitter],
+        help_text=_("Example: @juanperez")
+    )
+    github = models.CharField(
+        max_length=100, blank=True, default='',
+        verbose_name=_("GitHub"),
+        validators=[validate_github],
+        help_text=_("Example: https://github.com/juanperez")
     )
     lead_source = models.ForeignKey(
         'LeadSource',
