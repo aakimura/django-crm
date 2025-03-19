@@ -1,12 +1,17 @@
 import sys
+import os
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
+from dotenv import load_dotenv
 
 from crm.settings import *          # NOQA
 from massmail.settings import *     # NOQA
 from common.settings import *       # NOQA
 from tasks.settings import *        # NOQA
 from voip.settings import *         # NOQA
+
+# Import env file
+load_dotenv()
 
 # ---- Django settings ---- #
 
@@ -18,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # To get new value of key use code:
 # from django.core.management.utils import get_random_secret_key
 # print(get_random_secret_key())
-SECRET_KEY = 'j1c=6$s-dh#$ywt@(q4cm=j&0c*!0x!e-qm6k1%yoliec(15tn'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # Add your hosts to the list.
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
@@ -27,17 +32,16 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 DATABASES = {
     'default': {
         # for MySQl
-        'ENGINE': 'django.db.backends.mysql',
-        'PORT': '3306',
+        #'ENGINE': 'django.db.backends.mysql',
+        #'PORT': '3306',
 
         # for PostgreSQL
-        # "ENGINE": "django.db.backends.postgresql",
-        # 'PORT': '5432',   # for PostgreSQL
-
-        'NAME': 'crm_db',
-        'USER': 'crm_user',
-        'PASSWORD': 'crmpass',
-        'HOST': 'localhost',
+        "ENGINE": "django.db.backends.postgresql",
+        'PORT': os.getenv('DB_PORT'),   # for PostgreSQL
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USERNAME'),
+        'PASSWORD': os.getenv('DB_PASS'),
+        'HOST': os.getenv('DB_HOST'),
     }
 }
 
@@ -50,7 +54,7 @@ EMAIL_USE_TLS = True
 SERVER_EMAIL = 'crm@example.com'
 DEFAULT_FROM_EMAIL = 'crm@example.com'
 
-ADMINS = [("<Admin1>", "<admin1_box@example.com>")]   # specify admin
+ADMINS = [("akis", "akalkive@gmail.com")]   # specify admin
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -240,7 +244,7 @@ MODEL_ON_INDEX_PAGE = {
 }
 
 # Country VAT value
-VAT = 0    # %
+VAT = 16    # %
 
 # 2-Step Verification Credentials for Google Accounts.
 #  OAuth 2.0
