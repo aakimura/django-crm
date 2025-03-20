@@ -23,7 +23,7 @@ def validate_twitter(value):
 
 
 def validate_github(value):
-    is_github = re.search(r'(github\.com\/[a-zA-Z0-9_]+)', value)
+    is_github = re.search(r'(github\.com\/)', value)
     if not is_github:
         raise ValidationError(
             _("%(value)s is not a valid GitHub user URL"),
