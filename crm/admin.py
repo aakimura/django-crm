@@ -221,8 +221,10 @@ class ContactAdmin(contactadmin.ContactAdmin):
             ('Contact details', {
                 'fields': (
                     ('email', 'secondary_email'),
-                    ('skype', 'phone'),
-                    ('other_phone', 'mobile'),
+                    ('mobile', 'phone'),
+                    'other_phone',
+                    ('linkedin', 'twitter'),
+                    'github',
                     ('lead_source', 'company'),
                     'address', 'country'
                 )
